@@ -1,11 +1,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="java.util.List" %>
-<%@ page import="edu.school21.cinema.models.Session" %>
+<%@ page import="edu.school21.cinema.models.UserSession" %>
 <%@ page import="edu.school21.cinema.models.User" %>
 <%@ page import="edu.school21.cinema.models.Image" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<% List<Session> sessionList = (List<Session>) request.getSession().getAttribute("SessionAttributes"); %>
+<% List<UserSession> userSessionList = (List<UserSession>) request.getSession().getAttribute("SessionAttributes"); %>
 <% ArrayList<Image> imageList = (ArrayList<Image>) request.getSession().getAttribute("Images"); %>
 <% User u = (User) request.getSession().getAttribute("UserAttributes"); %>
 
@@ -128,7 +128,7 @@
                                 <p class="text mb-0">IP</p>
                             </div>
                         </div>
-                        <c:forEach var="s" items="<%= sessionList %>">
+                        <c:forEach var="s" items="<%= userSessionList %>">
                             <hr>
                             <div class="row">
                                 <div class="col-sm-3">

@@ -1,71 +1,51 @@
 package edu.school21.cinema.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonView;
+import edu.school21.cinema.utils.View;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
+@NoArgsConstructor
+@Getter
+@Setter
+@ToString
+@Entity
+@Table(name = "sessions")
 public class Session implements Serializable {
+
+    @JsonView(View.Search.class)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false)
     private Long id;
-    private Timestamp date_time;
-    private String ip;
-    private Long user_id;
 
-    public Session() {}
+    @JsonView(View.Search.class)
+    @ManyToOne
+    @JoinColumn(name = "film_id")
+    private Film film;
 
-    public Session(Timestamp timestamp, String ip, Long user_id) {
-        this.date_time = timestamp;
-        this.ip = ip;
-        this.user_id = user_id;
-        this.id = null;
-    }
+    @ToString.Exclude
+    @ManyToOne
+    @JoinColumn(name = "hall_id")
+    private Hall hall;
 
-    public Timestamp getDate_time() {
-        return date_time;
-    }
+    private BigDecimal price;
 
-    public void setDate_time(Timestamp date_time) {
-        this.date_time = date_time;
-    }
+    @Column(name = "date_time", nullable = false)
+    private LocalDateTime dateTime;
 
-    public String getIp() {
-        return ip;
-    }
-
-    public void setIp(String ip) {
-        this.ip = ip;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getUser_id() {
-        return user_id;
-    }
-
-    public void setUser_id(Long user_id) {
-        this.user_id = user_id;
-    }
-
-    public String getFormatedDate() {
-        return new SimpleDateFormat("MMMM dd, yyyy").format(date_time);
-    }
-
-    public String getFormatedTime() {
-        return new SimpleDateFormat("HH:mm").format(date_time);
-    }
-
-    @Override
-    public String toString() {
-        return "Session{" +
-                "id=" + id +
-                ", timestamp=" + date_time +
-                ", ip='" + ip + '\'' +
-                ", user_id=" + user_id +
-                '}';
+    @JsonView(View.Search.class)
+    @JsonProperty("dateTime")
+    public String getFormattedDateTime() {
+        return dateTime.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
     }
 }
