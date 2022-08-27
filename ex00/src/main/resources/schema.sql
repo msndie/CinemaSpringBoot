@@ -1,3 +1,9 @@
+-- DO $$ BEGIN
+--     CREATE TYPE role AS ENUM('ADMIN', 'USER');
+-- EXCEPTION
+--     WHEN duplicate_object THEN null;
+-- END $$;
+
 CREATE TABLE IF NOT EXISTS halls (
     id BIGSERIAL PRIMARY KEY,
     serial_number BIGINT NOT NULL UNIQUE,
@@ -54,7 +60,8 @@ CREATE TABLE IF NOT EXISTS users (
      last_name TEXT NOT NULL,
      email TEXT NOT NULL UNIQUE,
      phone_number TEXT NOT NULL,
-     password TEXT NOT NULL
+     password TEXT NOT NULL,
+     role TEXT NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS users_sessions (

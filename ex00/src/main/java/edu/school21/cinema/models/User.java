@@ -1,5 +1,6 @@
 package edu.school21.cinema.models;
 
+import edu.school21.cinema.security.Role;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -39,4 +40,8 @@ public class User {
     @Column(name = "password", nullable = false)
     @Type(type = "org.hibernate.type.TextType")
     private String password;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role", nullable = false)
+    private Role role;
 }

@@ -1,3 +1,4 @@
+<#-- @ftlvariable name="error" type="java.util.Optional<String>" -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -31,7 +32,7 @@
 <body class="text-center">
 
     <main class="form-signin w-100 m-auto">
-        <form class="row g-3" action="signIn" method="post">
+        <form class="row g-3" action="/signIn" method="post">
             <h1 class="h3 mb-4 fw-normal">Please sign in</h1>
 
             <div class="col-12">

@@ -14,12 +14,6 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
-    private PasswordEncoder passwordEncoder;
-
-    @Autowired
-    public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
-        this.passwordEncoder = passwordEncoder;
-    }
 
     @Autowired
     public void setUserRepository(UserRepository userRepository) {
@@ -45,24 +39,7 @@ public class UserServiceImpl implements UserService {
         userRepository.save(entity);
     }
 
-    public boolean signUp(User user) {
-        if (userRepository.findByEmail(user.getEmail()).isPresent()) {
-            return false;
-        }
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepository.save(user);
-        return true;
-    }
-
-    public boolean signIn(User user) {
-        Optional<User> userFromDb = userRepository.findByEmail(user.getEmail());
-        if (userFromDb.isPresent() && passwordEncoder.matches(user.getPassword(), userFromDb.get().getPassword())) {
-            user.setId(userFromDb.get().getId());
-            user.setFirstName(userFromDb.get().getFirstName());
-            user.setLastName(userFromDb.get().getLastName());
-            user.setPhoneNumber(userFromDb.get().getPhoneNumber());
-            return true;
-        }
-        return false;
+    public Optional<User> findByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 }
