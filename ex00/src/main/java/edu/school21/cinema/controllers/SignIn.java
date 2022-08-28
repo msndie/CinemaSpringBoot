@@ -2,9 +2,15 @@ package edu.school21.cinema.controllers;
 
 import edu.school21.cinema.models.Session;
 import edu.school21.cinema.models.User;
+import edu.school21.cinema.security.Role;
 import edu.school21.cinema.services.SessionService;
 import edu.school21.cinema.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -29,13 +35,21 @@ public class SignIn {
 //    }
 
     @GetMapping
-    public String get(@RequestParam Optional<String> error, @ModelAttribute("model") ModelMap model) {
-        model.addAttribute("error", error);
-        return "signIn";
+    public String get() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || authentication instanceof AnonymousAuthenticationToken
+            || !authentication.isAuthenticated()) {
+            return "signIn";
+        }
+        if (authentication.getAuthorities().contains(new SimpleGrantedAuthority(Role.ADMIN.name()))) {
+            return "redirect:/admin/panel/halls";
+        } else {
+            return "redirect:/profile";
+        }
     }
 
-    @PostMapping
-    public String post(HttpServletRequest req) {
+//    @PostMapping
+//    public String post(HttpServletRequest req) {
 //        User user = new User();
 //        user.setEmail(req.getParameter("email"));
 //        user.setPassword(req.getParameter("pass"));
@@ -56,6 +70,6 @@ public class SignIn {
 //            view.forward(req, res);
 //        }
 //        return "profile";
-        return "signIn";
-    }
+//        return "signIn";
+//    }
 }

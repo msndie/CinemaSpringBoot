@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -38,7 +39,7 @@ public class PosterServiceImpl implements PosterService {
         posterRepository.save(entity);
     }
 
-    public Poster findByUuid(UUID uuid) {
+    public Optional<Poster> findByUuid(UUID uuid) {
         return posterRepository.findByUuid(uuid);
     }
 }

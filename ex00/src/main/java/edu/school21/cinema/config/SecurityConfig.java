@@ -13,9 +13,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
@@ -30,19 +28,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final UserDetailsService userDetailsService;
     private final UserService userService;
     private final UserSessionService sessionService;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public SecurityConfig(UserDetailsService userDetailsService, UserService userService, UserSessionService sessionService) {
+    public SecurityConfig(UserDetailsService userDetailsService,
+                          UserService userService,
+                          UserSessionService sessionService,
+                          PasswordEncoder passwordEncoder) {
         this.userDetailsService = userDetailsService;
         this.userService = userService;
         this.sessionService = sessionService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth
                 .userDetailsService(userDetailsService)
-                .passwordEncoder(getEncoder());
+                .passwordEncoder(passwordEncoder);
     }
 
     @Override
@@ -50,7 +53,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .mvcMatchers("/admin/**").hasAuthority(Role.ADMIN.name())
                 .antMatchers("/profile").hasAnyAuthority(Role.ADMIN.name(), Role.USER.name())
-                .anyRequest().permitAll();
+                .antMatchers("/", "/signIn", "/signUp").permitAll()
+                .anyRequest().authenticated();
         http
                 .formLogin().permitAll()
                 .loginPage("/signIn")
@@ -60,6 +64,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .successHandler(((request, response, authentication) -> {
                     System.out.println(authentication.getName());
                     Optional<User> user = userService.findByEmail(authentication.getName());
+                    request.getSession().setAttribute("UserAttributes", user.get());
                     String remoteAddr = request.getRemoteAddr();
                     if (remoteAddr.equals("0:0:0:0:0:0:0:1")) {
                         InetAddress localIp = InetAddress.getLocalHost();
@@ -67,13 +72,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     }
                     UserSession session = new UserSession(null, remoteAddr, LocalDateTime.now(), user.get().getId());
                     sessionService.add(session);
+                    request.getSession().setAttribute("SessionAttributes", sessionService.getAllByUserId(user.get().getId()));
                     if (user.get().getRole() == Role.ADMIN) {
                         response.sendRedirect("/admin/panel/halls");
                     } else {
                         response.sendRedirect("/profile");
                     }
                 }))
-                .failureHandler(authenticationFailureHandler());
+                .failureUrl("/signIn");
         http.csrf().disable();
     }
 
@@ -96,9 +102,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //    public WebSecurityCustomizer webSecurityCustomizer() {
 //        return (web) -> web.ignoring().antMatchers("/ignore1", "/ignore2");
 //    }
-
-    @Bean
-    public PasswordEncoder getEncoder() {
-        return new BCryptPasswordEncoder();
-    }
 }

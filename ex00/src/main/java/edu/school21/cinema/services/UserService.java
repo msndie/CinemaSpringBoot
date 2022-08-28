@@ -6,4 +6,5 @@ import java.util.Optional;
 
 public interface UserService extends Service<User> {
     Optional<User> findByEmail(String email);
+    boolean signUp(User user);
 }

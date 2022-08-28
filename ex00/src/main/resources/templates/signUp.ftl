@@ -31,7 +31,7 @@
 <body class="text-center">
 
     <main class="form-signup w-100 m-auto">
-        <form class="row g-3" action="signUp" method="post">
+        <form class="row g-3" action="/signUp" method="post">
             <h1 class="h3 mb-3 fw-normal">Please sign up</h1>
             <div class="col-12">
                 <input type="text" id="fname" name="fname" class="form-control" placeholder="First name"
@@ -55,10 +55,15 @@
             </div>
             <div class="col-12">
                 <button type="submit" value="Submit" class="w-100 btn btn-md btn-primary">Sign up</button>
-                <p class="mt-3 mb-3 text-muted">Already have an account? <a href="signIn" id="link">Sign In</a></p>
+                <p class="mt-3 mb-3 text-muted">Already have an account? <a href="/signIn" id="link">Sign In</a></p>
                 <p class="mt-3 mb-3 text-muted">&copy; vseel, sclam | 2022</p>
             </div>
         </form>
+        <p style="color: red">
+            <#if model["error"]?has_content>
+                ${model["error"]}
+            </#if>
+        </p>
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"

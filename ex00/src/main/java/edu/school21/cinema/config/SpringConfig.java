@@ -8,7 +8,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+
+import java.io.File;
 
 @Configuration
 @PropertySource("classpath:application.properties")
@@ -22,11 +26,21 @@ public class SpringConfig {
 
     @Bean
     public String path() {
-        return env.getProperty("storage.path");
+        String path = env.getProperty("storage.path");
+        File folder = new File(path);
+        if (!folder.exists()) {
+            folder.mkdirs();
+        }
+        return path;
     }
 
     @Bean
     public Faker faker() {
         return new Faker();
+    }
+
+    @Bean
+    public PasswordEncoder getEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }

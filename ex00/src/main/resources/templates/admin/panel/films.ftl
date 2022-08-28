@@ -43,6 +43,7 @@
                                 <form action="/images" method="post" enctype="multipart/form-data">
                                     <input type="file" name="file" accept="image/*" required/>
                                     <input type="hidden" name="id" value="${film.id}">
+                                    <input type="hidden" name="type" value="poster">
                                     <input type="submit" value="Upload poster">
                                 </form>
                             </td>

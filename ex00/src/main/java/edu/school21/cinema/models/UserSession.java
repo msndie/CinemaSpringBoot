@@ -9,6 +9,7 @@ import org.hibernate.annotations.Type;
 import javax.persistence.*;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -32,11 +33,11 @@ public class UserSession {
     @Column(name = "user_id")
     private Long userId;
 
-    public String getFormatedDate() {
-        return new SimpleDateFormat("MMMM dd, yyyy").format(dateTime);
+    public String getFormattedDate() {
+        return dateTime.format(DateTimeFormatter.ofPattern("MMMM dd, yyyy"));
     }
 
-    public String getFormatedTime() {
-        return new SimpleDateFormat("HH:mm").format(dateTime);
+    public String getFormattedTime() {
+        return dateTime.format(DateTimeFormatter.ofPattern("HH:mm"));
     }
 }
