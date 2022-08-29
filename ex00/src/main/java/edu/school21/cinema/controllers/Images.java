@@ -7,12 +7,14 @@ import edu.school21.cinema.models.User;
 import edu.school21.cinema.services.AvatarService;
 import edu.school21.cinema.services.FilmService;
 import edu.school21.cinema.services.PosterService;
+import edu.school21.cinema.services.UserService;
 import edu.school21.cinema.utils.Utils;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -32,13 +34,17 @@ public class Images {
     private final PosterService posterService;
     private final FilmService filmService;
     private final AvatarService avatarService;
+    private final UserService userService;
 
     @Autowired
-    public Images(String path, PosterService posterService, FilmService filmService, AvatarService avatarService) {
+    public Images(String path, PosterService posterService,
+                  FilmService filmService, AvatarService avatarService,
+                  UserService userService) {
         this.path = path;
         this.posterService = posterService;
         this.filmService = filmService;
         this.avatarService = avatarService;
+        this.userService = userService;
     }
 
     @GetMapping(value = "{id}")
@@ -92,8 +98,11 @@ public class Images {
     }
 
     @PostMapping
-    public String submit(@RequestParam("file") MultipartFile file, @RequestParam("id") String id,
-                         @RequestParam("type") String type, HttpServletRequest request) {
+    public String submit(@RequestParam("file") MultipartFile file,
+                         @RequestParam("id") String id,
+                         @RequestParam("type") String type,
+                         HttpServletRequest request,
+                         Authentication authentication) {
         String name = file.getOriginalFilename();
         String[] extension = file.getContentType().split("/");
         UUID uuid = UUID.randomUUID();
@@ -111,6 +120,10 @@ public class Images {
             return "redirect:/admin/panel/films";
         } else if (type.equals("avatar")) {
             User user = (User) request.getSession().getAttribute("UserAttributes");
+            if (user == null) {
+                user = userService.findByEmail(authentication.getName()).get();
+                request.getSession().setAttribute("UserAttributes", user);
+            }
             if (Utils.createFile(file, path, extension[1], uuid)) {
                 Avatar avatar = new Avatar();
                 avatar.setMime(file.getContentType());

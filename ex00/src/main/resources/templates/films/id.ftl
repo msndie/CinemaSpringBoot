@@ -3,7 +3,7 @@
     <title></title>
 </head>
 <body>
-    <#assign film=model["FilmsList"]/>
+    <#assign film=model["Film"]/>
     <table class="datatable">
         <tr>
             <th>Title</th>

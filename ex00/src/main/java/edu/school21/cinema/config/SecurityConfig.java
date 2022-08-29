@@ -83,7 +83,8 @@ public class SecurityConfig {
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                 .and()
-                .rememberMe().rememberMeParameter("rememberMe").tokenValiditySeconds(1800).key("topSecret");
+                .rememberMe().rememberMeParameter("rememberMe")
+                .tokenValiditySeconds(1800).key("topSecret");
         return http.build();
     }
 }

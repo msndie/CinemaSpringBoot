@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 
 <head>
     <meta charset="utf-8">
@@ -69,6 +69,10 @@
                                 <input type="file" name="file" accept="image/*" class="form-control" required>
                             </div>
                             <input type="submit" value="Upload File" class="btn btn-outline-primary ms-1">
+                        </form>
+                        <form action="/logout" method="post">
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                            <input type="submit" value="Logout">
                         </form>
                     </div>
                 </div>

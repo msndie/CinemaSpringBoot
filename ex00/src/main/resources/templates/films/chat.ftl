@@ -41,6 +41,7 @@
             <form id="messageForm" name="messageForm">
                 <div class="form-group">
                     <div class="input-group clearfix">
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                         <input type="text" id="message" placeholder="Type a message..." autocomplete="off" class="form-control"/>
                         <button type="submit" class="primary">Send</button>
                     </div>

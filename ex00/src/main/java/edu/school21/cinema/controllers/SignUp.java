@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,8 +28,8 @@ public class SignUp {
     }
 
     @GetMapping
-    public String get(@ModelAttribute("model") ModelMap model) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    public String get(@ModelAttribute("model") ModelMap model,
+                      Authentication authentication) {
         if (authentication == null || authentication instanceof AnonymousAuthenticationToken
                 || !authentication.isAuthenticated()) {
             return "signUp";
