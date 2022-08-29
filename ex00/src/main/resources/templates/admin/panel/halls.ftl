@@ -10,6 +10,7 @@
         <fieldset>
             <legend>Add movie hall</legend>
             <form name="car" action="/admin/panel/halls" method="post">
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 Serial number : <input type="number" name="serialNumber" required/><br/>
                 Number of seats : <input type="number" name="numberOfSeats" required/><br/>
                 <input type="submit" value="Add hall" />

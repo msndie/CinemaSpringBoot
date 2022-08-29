@@ -62,6 +62,7 @@
                     </p>
                     <div class="d-flex justify-content-center mb-2">
                         <form action="/images" method="post" enctype="multipart/form-data">
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                             <div class="mb-3 mw-100">
                                 <input type="hidden" name="id" value="${user.getId()}">
                                 <input type="hidden" name="type" value="avatar">

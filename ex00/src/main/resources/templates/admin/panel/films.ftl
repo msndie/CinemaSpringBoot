@@ -10,6 +10,7 @@
         <fieldset>
             <legend>Add movie hall</legend>
             <form name="film" action="/admin/panel/films" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 Title : <input type="text" name="title" required/><br/>
                 Year of release (1895 - 2022) : <input type="number" name="year" min="1895" max="2022" required/><br/>
                 Age restrictions : <input type="number" name="age" required min="0" max="21" /><br/>
@@ -41,6 +42,7 @@
                         <#else>
                             <td>
                                 <form action="/images" method="post" enctype="multipart/form-data">
+                                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                                     <input type="file" name="file" accept="image/*" required/>
                                     <input type="hidden" name="id" value="${film.id}">
                                     <input type="hidden" name="type" value="poster">

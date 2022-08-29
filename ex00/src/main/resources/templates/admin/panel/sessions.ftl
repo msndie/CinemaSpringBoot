@@ -11,6 +11,7 @@
             <fieldset>
                 <legend>Add movie session</legend>
                 <form name="session" action="/admin/panel/sessions" method="post">
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                     Film : <select name="film" required>
                         <#list model["FilmsList"] as film>
                             <option value="${film.id}">${film.title} ${film.year?string.computer}</option>

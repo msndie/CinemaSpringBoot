@@ -14,7 +14,7 @@ public class Utils {
             stream.flush();
             stream.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println(e.getMessage());
             return false;
         }
         return true;
@@ -31,13 +31,5 @@ public class Utils {
             cnt_size = String.format("%.2fKB", size_kb);
         }
         return cnt_size;
-    }
-
-    public static void copyData(InputStream in, OutputStream out) throws IOException {
-        byte[] buffer = new byte[8 * 1024];
-        int len;
-        while ((len = in.read(buffer)) > 0) {
-            out.write(buffer, 0, len);
-        }
     }
 }

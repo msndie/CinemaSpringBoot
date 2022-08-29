@@ -51,7 +51,9 @@ public class Images {
         } catch (IllegalArgumentException ignored) {}
         if (uuid != null) {
             avatar = avatarService.findByUuid(uuid);
-            poster = posterService.findByUuid(uuid);
+            if (!avatar.isPresent()) {
+                poster = posterService.findByUuid(uuid);
+            }
         }
         if (poster.isPresent()) {
             try {

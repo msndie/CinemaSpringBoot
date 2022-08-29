@@ -33,6 +33,7 @@
 
     <main class="form-signin w-100 m-auto">
         <form class="row g-3" action="/signIn" method="post">
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             <h1 class="h3 mb-4 fw-normal">Please sign in</h1>
 
             <div class="col-12">
@@ -46,10 +47,14 @@
 
             <div class="col-12">
                 <button type="submit" value="Submit" class="w-100 btn btn-md btn-primary">Sign in</button>
-                <p class="mt-3 mb-3 text-muted">Don't have an account yet? <a href="signUp" id="link">Sign Up</a>
+                <p class="mt-3 mb-3 text-muted">Don't have an account yet? <a href="/signUp" id="link">Sign Up</a>
                 </p>
                 <p class="mt-3 mb-3 text-muted">&copy; vseel, sclam | 2022</p>
             </div>
+            <label for="remember-me">
+                <input type="checkbox" id="remember-me" name="rememberMe" value="yes">
+                Remember me?
+            </label>
         </form>
     </main>
 

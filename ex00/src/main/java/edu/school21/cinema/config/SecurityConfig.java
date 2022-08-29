@@ -2,20 +2,20 @@ package edu.school21.cinema.config;
 
 import edu.school21.cinema.models.User;
 import edu.school21.cinema.models.UserSession;
-import edu.school21.cinema.security.MyAuthenticationFailureHandler;
 import edu.school21.cinema.services.UserService;
 import edu.school21.cinema.services.UserSessionService;
 import edu.school21.cinema.security.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.SecurityFilterChain;
 
 import java.net.InetAddress;
 import java.time.LocalDateTime;
@@ -23,39 +23,39 @@ import java.util.Optional;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig {
 
-    private final UserDetailsService userDetailsService;
     private final UserService userService;
     private final UserSessionService sessionService;
-    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public SecurityConfig(UserDetailsService userDetailsService,
-                          UserService userService,
-                          UserSessionService sessionService,
-                          PasswordEncoder passwordEncoder) {
-        this.userDetailsService = userDetailsService;
+    public SecurityConfig(UserService userService,
+                          UserSessionService sessionService) {
         this.userService = userService;
         this.sessionService = sessionService;
-        this.passwordEncoder = passwordEncoder;
     }
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth
+    @Bean
+    @Autowired
+    public AuthenticationManager authManager(HttpSecurity http, PasswordEncoder passwordEncoder, UserDetailsService userDetailsService)
+            throws Exception {
+        return http.getSharedObject(AuthenticationManagerBuilder.class)
                 .userDetailsService(userDetailsService)
-                .passwordEncoder(passwordEncoder);
+                .passwordEncoder(passwordEncoder)
+                .and()
+                .build();
     }
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .mvcMatchers("/admin/**").hasAuthority(Role.ADMIN.name())
                 .antMatchers("/profile").hasAnyAuthority(Role.ADMIN.name(), Role.USER.name())
                 .antMatchers("/", "/signIn", "/signUp").permitAll()
-                .anyRequest().authenticated();
-        http
+                .anyRequest().authenticated()
+                .and()
+                .logout().logoutUrl("/logout").logoutSuccessUrl("/")
+                .and()
                 .formLogin().permitAll()
                 .loginPage("/signIn")
                 .loginProcessingUrl("/signIn")
@@ -79,27 +79,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         response.sendRedirect("/profile");
                     }
                 }))
-                .failureUrl("/signIn");
-        http.csrf().disable();
+                .failureUrl("/signIn")
+                .and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+                .and()
+                .rememberMe().rememberMeParameter("rememberMe").tokenValiditySeconds(1800).key("topSecret");
+        return http.build();
     }
-
-    @Bean
-    public AuthenticationFailureHandler authenticationFailureHandler() {
-        return new MyAuthenticationFailureHandler();
-    }
-
-//    @Bean
-//    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-//        http
-//                .authorizeHttpRequests((authz) -> authz
-//                        .anyRequest().authenticated()
-//                )
-//                .httpBasic(withDefaults());
-//        return http.build();
-//    }
-//
-//    @Bean
-//    public WebSecurityCustomizer webSecurityCustomizer() {
-//        return (web) -> web.ignoring().antMatchers("/ignore1", "/ignore2");
-//    }
 }

@@ -32,6 +32,7 @@
 
     <main class="form-signup w-100 m-auto">
         <form class="row g-3" action="/signUp" method="post">
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             <h1 class="h3 mb-3 fw-normal">Please sign up</h1>
             <div class="col-12">
                 <input type="text" id="fname" name="fname" class="form-control" placeholder="First name"
