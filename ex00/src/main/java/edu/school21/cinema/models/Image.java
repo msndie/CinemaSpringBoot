@@ -15,8 +15,8 @@ import java.util.UUID;
 @Setter
 @ToString
 @Entity
-@Table(name = "avatars")
-public class Avatar {
+@Table(name = "images")
+public class Image {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -25,19 +25,23 @@ public class Avatar {
     @Column(name = "user_id")
     private Long userId;
 
-    @Column(name = "uuid")
+    @Column(name = "uuid", nullable = false)
     private UUID uuid;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     @Type(type = "org.hibernate.type.TextType")
     private String name;
 
-    @Column(name = "mime")
+    @Column(name = "mime", nullable = false)
     @Type(type = "org.hibernate.type.TextType")
     private String mime;
 
-    @Column(name = "size")
+    @Column(name = "size", nullable = false)
     private Long size;
+
+    @Column(name = "type", nullable = false)
+    @Type(type = "org.hibernate.type.TextType")
+    private String type;
 
     public String getSizeInStr() {
         return Utils.convert(size);

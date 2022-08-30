@@ -1,6 +1,6 @@
 package edu.school21.cinema.repositories;
 
-import edu.school21.cinema.models.Avatar;
+import edu.school21.cinema.models.Image;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -9,7 +9,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface AvatarRepository extends CrudRepository<Avatar, Long> {
-    List<Avatar> findAllByUserId(Long userId);
-    Optional<Avatar> getByUuid(UUID uuid);
+public interface ImageRepository extends CrudRepository<Image, Long> {
+    Optional<Image> findByUuid(UUID uuid);
+    List<Image> findAllByUserId(Long userId);
 }
