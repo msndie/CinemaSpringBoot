@@ -36,23 +36,36 @@
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             <h1 class="h3 mb-3 fw-normal"><@spring.message code="sign.up.header"/></h1>
             <div class="col-12">
-                <input type="text" id="fname" name="fname" class="form-control" placeholder="<@spring.message code="first.name"/>"
+                <@spring.bind 'userForm.firstName'/>
+                <input type="text" id="fname" name="${spring.status.expression}" class="form-control" placeholder="<@spring.message code="first.name"/>"
                     aria-label="First name" required>
+                <#if spring.status.errorMessage?has_content>
+                    <p>${spring.status.errorMessage}</p>
+                </#if>
             </div>
             <div class="col-12">
-                <input type="text" id="lname" name="lname" class="form-control" placeholder="<@spring.message code="last.name"/>"
+                <@spring.bind 'userForm.lastName'/>
+                <input type="text" id="lname" name="${spring.status.expression}" class="form-control" placeholder="<@spring.message code="last.name"/>"
                     aria-label="Last name" required>
+                <#if spring.status.errorMessage?has_content>
+                    <p>${spring.status.errorMessage}</p>
+                </#if>
             </div>
             <div class="col-12">
-                <input type="email" id="email" name="email" class="form-control" placeholder="<@spring.message code="email"/>"
+                <@spring.bind 'userForm.email'/>
+                <input type="text" id="email" name="${spring.status.expression}" class="form-control" placeholder="<@spring.message code="email"/>"
                        aria-label="Email" required>
+                <#if spring.status.errorMessage?has_content>
+                    <p>${spring.status.errorMessage}</p>
+                </#if>
             </div>
             <div class="col-12">
-                <input type="tel" id="phone" name="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" class="form-control"
-                    placeholder="<@spring.message code="phone"/> 123-456-7890" aria-label="Phone" required>
+                <@spring.bind 'userForm.phoneNumber'/>
+                <input type="text" id="phone" name="${spring.status.expression}" class="form-control"
+                    placeholder="<@spring.message code="phone"/> +123-456-7890" aria-label="Phone" required>
             </div>
             <div class="col-12">
-                <input type="password" id="pass" name="pass" class="form-control" placeholder="<@spring.message code="password"/>"
+                <input type="password" id="pass" name="password" class="form-control" placeholder="<@spring.message code="password"/>"
                     aria-label="Password" required>
             </div>
             <div class="col-12">
@@ -64,8 +77,8 @@
             </div>
         </form>
         <p style="color: red">
-            <#if model["error"]?has_content>
-                ${model["error"]}
+            <#if userForm["error"]?has_content>
+                ${userForm["error"]}
             </#if>
         </p>
     </main>

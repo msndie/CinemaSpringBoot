@@ -8,13 +8,13 @@ import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/signUp")
@@ -28,7 +28,7 @@ public class SignUp {
     }
 
     @GetMapping
-    public String get(@ModelAttribute("model") ModelMap model,
+    public String get(@ModelAttribute("userForm") User user,
                       Authentication authentication) {
         if (authentication == null || authentication instanceof AnonymousAuthenticationToken
                 || !authentication.isAuthenticated()) {
@@ -42,14 +42,20 @@ public class SignUp {
     }
 
     @PostMapping
-    public String post(HttpServletRequest req, @ModelAttribute("model") ModelMap model) {
-        User user = new User(null,
-                req.getParameter("fname"),
-                req.getParameter("lname"),
-                req.getParameter("email"),
-                req.getParameter("phone"),
-                req.getParameter("pass"),
-                Role.USER);
+    public String post(@ModelAttribute("userForm") @Valid User user,
+                       BindingResult bindingResult,
+                       Model model) {
+//        User user = new User(null,
+//                req.getParameter("fname"),
+//                req.getParameter("lname"),
+//                req.getParameter("email"),
+//                req.getParameter("phone"),
+//                req.getParameter("pass"),
+//                Role.USER);
+        user.setRole(Role.USER);
+        if (bindingResult.hasErrors()) {
+            return "signUp";
+        }
         if (!userService.signUp(user)) {
             model.addAttribute("error", "User with this email already exists");
             return "signUp";
