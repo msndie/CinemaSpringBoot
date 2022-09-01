@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Chat room</title>
+    <#import "/spring.ftl" as spring/>
+    <title><@spring.message code="chat.title"/></title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 
@@ -10,20 +11,23 @@
             display: none;
         }
     </style>
-
 </head>
 <body>
     <h1>${model["Film"].title}</h1>
     <div id="chat-page" class="hidden">
         <div class="chat-container">
             <div class="connecting">
-                Connecting...
+                <@spring.message code="chat.connecting"/>...
             </div>
             <ul id="messageArea">
                 <#if model["Messages"]?has_content>
                     <#list model["Messages"] as msg>
                         <#if msg.userName == model["Name"]>
-                            <#assign author="you"/>
+                            <#if .locale == "ru">
+                                <#assign author="вы"/>
+                            <#else>
+                                <#assign author="you"/>
+                            </#if>
                         <#else>
                             <#assign author="${msg.userName}"/>
                         </#if>
@@ -42,8 +46,8 @@
                 <div class="form-group">
                     <div class="input-group clearfix">
                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                        <input type="text" id="message" placeholder="Type a message..." autocomplete="off" class="form-control"/>
-                        <button type="submit" class="primary">Send</button>
+                        <input type="text" id="message" placeholder="<@spring.message code="chat.placeholder"/>" autocomplete="off" class="form-control"/>
+                        <button type="submit" class="primary"><@spring.message code="chat.send"/></button>
                     </div>
                 </div>
             </form>

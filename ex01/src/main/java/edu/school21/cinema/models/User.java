@@ -1,12 +1,14 @@
 package edu.school21.cinema.models;
 
 import edu.school21.cinema.security.Role;
+import edu.school21.cinema.validation.PasswordConstraint;
 import lombok.*;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,26 +25,29 @@ public class User {
 
     @Column(name = "first_name", nullable = false)
     @Type(type = "org.hibernate.type.TextType")
-    @NotBlank(message = "{first.name.notblack}")
+    @NotBlank(message = "{first.name.notblank}")
     private String firstName;
 
     @Column(name = "last_name", nullable = false)
     @Type(type = "org.hibernate.type.TextType")
-    @NotBlank(message = "{last.name.notblack}")
+    @NotBlank(message = "{last.name.notblank}")
     private String lastName;
 
     @Column(name = "email", nullable = false)
     @Type(type = "org.hibernate.type.TextType")
     @Email(regexp = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$",
-            message = "{email.notvalid}")
+            message = "{email.invalid}")
     private String email;
 
     @Column(name = "phone_number", nullable = false)
     @Type(type = "org.hibernate.type.TextType")
+    @Pattern(regexp = "^(\\+7|7|8)?[\\s\\-]?\\(?[\\d][0-9]{2}\\)?[\\s\\-]?[0-9]{3}[\\s\\-]?[0-9]{2}[\\s\\-]?[0-9]{2}$",
+            message = "{phone.invalid}")
     private String phoneNumber;
 
     @Column(name = "password", nullable = false)
     @Type(type = "org.hibernate.type.TextType")
+    @PasswordConstraint(message = "{password.invalid}")
     private String password;
 
     @Enumerated(EnumType.STRING)

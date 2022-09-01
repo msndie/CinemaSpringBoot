@@ -38,7 +38,7 @@
             <div class="col-12">
                 <@spring.bind 'userForm.firstName'/>
                 <input type="text" id="fname" name="${spring.status.expression}" class="form-control" placeholder="<@spring.message code="first.name"/>"
-                    aria-label="First name" required>
+                    aria-label="First name">
                 <#if spring.status.errorMessage?has_content>
                     <p>${spring.status.errorMessage}</p>
                 </#if>
@@ -46,7 +46,7 @@
             <div class="col-12">
                 <@spring.bind 'userForm.lastName'/>
                 <input type="text" id="lname" name="${spring.status.expression}" class="form-control" placeholder="<@spring.message code="last.name"/>"
-                    aria-label="Last name" required>
+                    aria-label="Last name">
                 <#if spring.status.errorMessage?has_content>
                     <p>${spring.status.errorMessage}</p>
                 </#if>
@@ -54,7 +54,7 @@
             <div class="col-12">
                 <@spring.bind 'userForm.email'/>
                 <input type="text" id="email" name="${spring.status.expression}" class="form-control" placeholder="<@spring.message code="email"/>"
-                       aria-label="Email" required>
+                       aria-label="Email">
                 <#if spring.status.errorMessage?has_content>
                     <p>${spring.status.errorMessage}</p>
                 </#if>
@@ -62,11 +62,18 @@
             <div class="col-12">
                 <@spring.bind 'userForm.phoneNumber'/>
                 <input type="text" id="phone" name="${spring.status.expression}" class="form-control"
-                    placeholder="<@spring.message code="phone"/> +123-456-7890" aria-label="Phone" required>
+                    placeholder="<@spring.message code="phone"/> +7(777)777777" aria-label="Phone">
+                <#if spring.status.errorMessage?has_content>
+                    <p>${spring.status.errorMessage}</p>
+                </#if>
             </div>
             <div class="col-12">
+                <@spring.bind 'userForm.password'/>
                 <input type="password" id="pass" name="password" class="form-control" placeholder="<@spring.message code="password"/>"
-                    aria-label="Password" required>
+                    aria-label="Password">
+                <#if spring.status.errorMessage?has_content>
+                    <p>${spring.status.errorMessage}</p>
+                </#if>
             </div>
             <div class="col-12">
                 <button type="submit" value="Submit" class="w-100 btn btn-md btn-primary"><@spring.message code="sign.up"/></button>
@@ -77,8 +84,8 @@
             </div>
         </form>
         <p style="color: red">
-            <#if userForm["error"]?has_content>
-                ${userForm["error"]}
+            <#if error?has_content>
+                ${error}
             </#if>
         </p>
     </main>
