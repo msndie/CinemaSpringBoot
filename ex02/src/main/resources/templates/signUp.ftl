@@ -31,6 +31,9 @@
 
 <body class="text-center">
 
+<#if verification?has_content>
+    <h1><@spring.message code="sign.up.verification.text"/></h1>
+<#else>
     <main class="form-signup w-100 m-auto">
         <form class="row g-3" action="/signUp" method="post">
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
@@ -38,7 +41,7 @@
             <div class="col-12">
                 <@spring.bind 'userForm.firstName'/>
                 <input type="text" id="fname" name="${spring.status.expression}" class="form-control" placeholder="<@spring.message code="first.name"/>"
-                    aria-label="First name">
+                       aria-label="First name">
                 <#if spring.status.errorMessage?has_content>
                     <p>${spring.status.errorMessage}</p>
                 </#if>
@@ -46,7 +49,7 @@
             <div class="col-12">
                 <@spring.bind 'userForm.lastName'/>
                 <input type="text" id="lname" name="${spring.status.expression}" class="form-control" placeholder="<@spring.message code="last.name"/>"
-                    aria-label="Last name">
+                       aria-label="Last name">
                 <#if spring.status.errorMessage?has_content>
                     <p>${spring.status.errorMessage}</p>
                 </#if>
@@ -62,7 +65,7 @@
             <div class="col-12">
                 <@spring.bind 'userForm.phoneNumber'/>
                 <input type="text" id="phone" name="${spring.status.expression}" class="form-control"
-                    placeholder="<@spring.message code="phone"/> +7(777)777777" aria-label="Phone">
+                       placeholder="<@spring.message code="phone"/> +7(777)777777" aria-label="Phone">
                 <#if spring.status.errorMessage?has_content>
                     <p>${spring.status.errorMessage}</p>
                 </#if>
@@ -70,7 +73,7 @@
             <div class="col-12">
                 <@spring.bind 'userForm.password'/>
                 <input type="password" id="pass" name="password" class="form-control" placeholder="<@spring.message code="password"/>"
-                    aria-label="Password">
+                       aria-label="Password">
                 <#if spring.status.errorMessage?has_content>
                     <p>${spring.status.errorMessage}</p>
                 </#if>
@@ -89,6 +92,7 @@
             </#if>
         </p>
     </main>
+</#if>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"

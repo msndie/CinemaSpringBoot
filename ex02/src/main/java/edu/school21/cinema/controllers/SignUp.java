@@ -9,7 +9,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -46,22 +45,14 @@ public class SignUp {
                        BindingResult bindingResult,
                        Model model,
                        HttpServletRequest req) {
-//        User user = new User(null,
-//                req.getParameter("fname"),
-//                req.getParameter("lname"),
-//                req.getParameter("email"),
-//                req.getParameter("phone"),
-//                req.getParameter("pass"),
-//                Role.USER);
-        System.out.println(user);
         user.setRole(Role.USER);
-        if (bindingResult.hasErrors()) {
-            return "signUp";
+        if (!bindingResult.hasErrors()) {
+            if (!userService.signUp(user, req.getRequestURL().toString().replace(req.getServletPath(), ""))) {
+                model.addAttribute("error", "User with this email already exists, or we can't send you an email");
+            } else {
+                model.addAttribute("verification", "YEP");
+            }
         }
-        if (!userService.signUp(user, req.getRequestURL().toString().replace(req.getServletPath(), ""))) {
-            model.addAttribute("error", "User with this email already exists, or we can't send you an email");
-            return "signUp";
-        }
-        return "redirect:/signIn";
+        return "signUp";
     }
 }

@@ -37,9 +37,6 @@ public class HallsManage {
             serialNumber = Long.parseLong(request.getParameter("serialNumber"));
             numberOfSeats = Integer.parseInt(request.getParameter("numberOfSeats"));
         } catch (NumberFormatException ignored) {
-            System.out.println(request.getParameter("serialNumber"));
-            System.out.println(request.getParameter("numberOfSeats"));
-            System.out.println("EXCEPTION");
         }
         if (serialNumber != null && numberOfSeats != null
             && serialNumber > 0 && numberOfSeats > 0) {

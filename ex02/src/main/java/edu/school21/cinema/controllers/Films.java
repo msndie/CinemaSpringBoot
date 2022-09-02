@@ -80,7 +80,6 @@ public class Films {
     @MessageMapping(value = "/films/{id}/chat/send")
     @SendTo(value = "/films/{id}/chat/messages")
     public Message getMessage(@Payload Message message, @DestinationVariable Long id) {
-        System.out.println(message);
         messageService.add(message);
         return message;
     }
