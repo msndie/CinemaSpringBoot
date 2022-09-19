@@ -37,7 +37,7 @@
             <th>Poster</th>
             </thead>
             <tr>
-                <td>${film.title}</td>
+                <td><a href="/films/${film.id}/chat" class="link-primary">${film.title}</a></td>
                 <td>${film.year?string.computer}</td>
                 <td>${film.ageRestrictions}</td>
                 <td>${film.description}</td>

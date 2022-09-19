@@ -38,7 +38,7 @@
                 </thead>
                 <#list model["Films"] as film>
                     <tr>
-                        <td><a href="/films/${film.id}/chat" class="link-primary">${film.title}</a></td>
+                        <td><a href="/films/${film.id}" class="link-primary">${film.title}</a></td>
                         <td>${film.year?string.computer}</td>
                         <td>${film.ageRestrictions}</td>
                         <td>${film.description}</td>
