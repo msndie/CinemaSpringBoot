@@ -4,7 +4,7 @@ Wait for my teammate to finish front. I will add screenshots later
 
 # CinemaSpringBoot
 
-This is a site for movie theater, union of my two previous projects (FWA and Cinema).
+This is a site for movie theater, union of my two previous projects (<a href="https://github.com/msndie/FWA">FWA</a> and <a href="https://github.com/msndie/Cinema">Cinema</a>).
 - Now users has roles
 - remember-me functionality which can be enabled on signIn page
 - site has two languages (Russian and English)
