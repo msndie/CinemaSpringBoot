@@ -1,0 +1,25 @@
+services:
+  tom:
+    build: .
+    container_name: tom
+    ports:
+      - "8080:8080"
+    networks:
+      - net
+    depends_on:
+      - sql
+  sql:
+    image: postgres
+    environment:
+      POSTGRES_USER: myUser
+      POSTGRES_PASSWORD: myPass
+      POSTGRES_DB: cinema
+    ports:
+      - "5433:5433"
+    networks:
+      - net
+    command: -p 5433
+
+networks:
+  net:
+   driver: bridge
