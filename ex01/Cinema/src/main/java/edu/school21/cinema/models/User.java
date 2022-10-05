@@ -1,7 +1,6 @@
 package edu.school21.cinema.models;
 
 import edu.school21.cinema.security.Role;
-import edu.school21.cinema.validation.ControllerGroup;
 import edu.school21.cinema.validation.PasswordConstraint;
 import lombok.*;
 import org.hibernate.annotations.Type;
@@ -48,7 +47,7 @@ public class User {
 
     @Column(name = "password", nullable = false)
     @Type(type = "org.hibernate.type.TextType")
-    @PasswordConstraint(message = "{password.invalid}", groups = ControllerGroup.class)
+    @PasswordConstraint(message = "{password.invalid}")
     private String password;
 
     @Enumerated(EnumType.STRING)

@@ -9,11 +9,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @Controller
@@ -45,13 +43,6 @@ public class SignUp {
     public String post(@ModelAttribute("userForm") @Valid User user,
                        BindingResult bindingResult,
                        Model model) {
-//        User user = new User(null,
-//                req.getParameter("fname"),
-//                req.getParameter("lname"),
-//                req.getParameter("email"),
-//                req.getParameter("phone"),
-//                req.getParameter("pass"),
-//                Role.USER);
         user.setRole(Role.USER);
         if (bindingResult.hasErrors()) {
             return "signUp";
