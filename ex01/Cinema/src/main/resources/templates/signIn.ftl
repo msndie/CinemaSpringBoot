@@ -45,6 +45,10 @@
                 <input type="password" id="pass" name="pass" class="form-control" placeholder="<@spring.message code="password"/>"
                     aria-label="Password" required>
             </div>
+            <div class="col-12">
+                <input type="checkbox" id="remember-me" name="rememberMe" value="yes" class="form-check-input">
+                <label class="form-check-label" for="remember-me"><@spring.message code="sign.in.remember.me"/></label>
+            </div>
 
             <div class="col-12">
                 <button type="submit" value="Submit" class="w-100 btn btn-md btn-primary"><@spring.message code="sign.in"/></button>
@@ -54,17 +58,12 @@
                 </p>
                 <p class="mt-3 mb-3 text-muted">&copy; vseel, sclam | 2022</p>
             </div>
-            <label for="remember-me">
-                <input type="checkbox" id="remember-me" name="rememberMe" value="yes">
-                <@spring.message code="sign.in.remember.me"/>
-            </label>
         </form>
-        <span><@spring.message code="lang.change"/></span>
-        <select id="locales">
-            <option value=""></option>
-            <option value="en"><@spring.message code="lang.eng"/></option>
-            <option value="ru"><@spring.message code="lang.rus"/></option>
-        </select>
+        <div class="pb-2">
+            <span><@spring.message code="lang.change"/>:</span>
+        </div>
+        <a class="btn btn-outline-primary btn-sm" href="?lang=en"><@spring.message code="lang.eng" /></a>
+        <a class="btn btn-outline-primary btn-sm" href="?lang=ru"><@spring.message code="lang.rus" /></a>
     </main>
 
     <script type="text/javascript">
