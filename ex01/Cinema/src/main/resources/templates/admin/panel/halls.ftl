@@ -13,7 +13,6 @@
 </head>
 
 <body>
-    <#--  <@u.adminNavbar/>  -->
     <div class="container pt-4">
         <div class="container-fluid pb-2">
             <fieldset>

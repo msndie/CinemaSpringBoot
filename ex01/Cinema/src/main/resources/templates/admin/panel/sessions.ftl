@@ -13,7 +13,6 @@
 </head>
 
 <body>
-    <#--  <@u.adminNavbar/>  -->
     <div class="container pt-4">
         <#if model["FilmsList"]?has_content && model["HallsList"]?has_content>
             <div class="container-fluid pb-2">

@@ -65,17 +65,6 @@
         <a class="btn btn-outline-primary btn-sm" href="?lang=en"><@spring.message code="lang.eng" /></a>
         <a class="btn btn-outline-primary btn-sm" href="?lang=ru"><@spring.message code="lang.rus" /></a>
     </main>
-
-    <script type="text/javascript">
-    $(document).ready(function() {
-        $("#locales").change(function () {
-            var selectedOption = $('#locales').val();
-            if (selectedOption != ''){
-                window.location.replace('signIn?lang=' + selectedOption);
-            }
-        });
-    });
-    </script>
 </body>
 
 </html>
