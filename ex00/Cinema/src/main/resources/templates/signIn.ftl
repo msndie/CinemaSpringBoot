@@ -1,4 +1,3 @@
-<#-- @ftlvariable name="error" type="java.util.Optional<String>" -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -44,6 +43,10 @@
                 <input type="password" id="pass" name="pass" class="form-control" placeholder="Password"
                     aria-label="Password" required>
             </div>
+            <div class="col-12">
+                <input type="checkbox" id="remember-me" name="rememberMe" value="yes" class="form-check-input">
+                <label class="form-check-label" for="remember-me">Remember me</label>
+            </div>
 
             <div class="col-12">
                 <button type="submit" value="Submit" class="w-100 btn btn-md btn-primary">Sign in</button>
@@ -51,10 +54,6 @@
                 </p>
                 <p class="mt-3 mb-3 text-muted">&copy; vseel, sclam | 2022</p>
             </div>
-            <label for="remember-me">
-                <input type="checkbox" id="remember-me" name="rememberMe" value="yes">
-                Remember me?
-            </label>
         </form>
     </main>
 
