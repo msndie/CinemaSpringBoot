@@ -27,7 +27,7 @@
 <body>
 <div class="container text-center">
     <h1 class="h1">Not found</h1>
-    <p class="mt-3 mb-3 text-muted">Back to <a href="/films" id="link">films</a> page
+    <p class="mt-3 mb-3 text-muted">Back to <a href="/profile" id="link">profile</a> page
     </p>
 </div>
 </body>
