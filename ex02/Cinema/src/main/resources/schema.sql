@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS ex02_boot.images (
 );
 
 CREATE TABLE IF NOT EXISTS ex02_boot.halls (
-    id BIGSERIAL PRIMARY KEY,
+    id BIGINT DEFAULT nextval('ex02_boot.halls_id') PRIMARY KEY,
     serial_number BIGINT NOT NULL UNIQUE,
     number_of_seats INTEGER NOT NULL
 );
