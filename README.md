@@ -1,8 +1,48 @@
-# Status
-
-Wait for my teammate to finish front. I will add screenshots later
-
 # CinemaSpringBoot
+
+<details>
+<summary>/</summary>
+<img src="/screenshots/index.png">
+</details>
+<details>
+<summary>/signUp</summary>
+<img src="/screenshots/signUp.png">
+<img src="/screenshots/signUp_errs_eng.png">
+<img src="/screenshots/signUp_errs_ru.png">
+</details>
+<details>
+<summary>/signIn</summary>
+<img src="/screenshots/signIn.png">
+</details>
+<details>
+<summary>/profile</summary>
+<img src="/screenshots/profile_default.png">
+<img src="/screenshots/profile_with_avatar.png">
+</details>
+<details>
+<summary>/admin/panel/films</summary>
+<img src="https://github.com/msndie/Cinema/blob/main/screenshots/admin_panel_films.png">
+</details>
+<details>
+<summary>/admin/panel/halls</summary>
+<img src="https://github.com/msndie/Cinema/blob/main/screenshots/admin_panel_halls.png">
+</details>
+<details>
+<summary>/admin/panel/sessions</summary>
+<img src="https://github.com/msndie/Cinema/blob/main/screenshots/admin_panel_sessions.png">
+</details>
+<details>
+<summary>/sessions</summary>
+<img src="/screenshots/sessions.png">
+</details>
+<details>
+<summary>/films</summary>
+<img src="https://github.com/msndie/Cinema/blob/main/screenshots/films.png">
+</details>
+<details>
+<summary>/films/{id}/chat</summary>
+<img src="https://github.com/msndie/Cinema/blob/main/screenshots/films_%7Bid%7D_chat.png">
+</details>
 
 This is a site for movie theater, union of my two previous projects (<a href="https://github.com/msndie/FWA">FWA</a> and <a href="https://github.com/msndie/Cinema">Cinema</a>).
 - Now users has roles
