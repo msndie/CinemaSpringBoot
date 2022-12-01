@@ -84,8 +84,8 @@ docker compose up --build
 Now website available at <a href="http://localhost:8080"><b>localhost:8080</b></a>. You can access it through ADMIN account (email - <b>admin@admin.com</b> pass - <b>123QWEasd</b>)
 Or you can create new account, it will send an email on address that you provide, but not really, actually email will be available on <a href="https://ethereal.email">this website</a>. You need to put following credentials to get it
 ```
-marlee22@ethereal.email
-8cfTXwDVZGDP62mVZq
+marty.wintheiser@ethereal.email
+9BdsRtXH3Qmhg6CpxU
 ```
 Then just click on the link in the email
 
